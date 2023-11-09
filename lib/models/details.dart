@@ -14,6 +14,7 @@ class TransactionDetailScreen extends StatelessWidget {
     String amount = '';
     String category = '' ;
     String date = '';
+    String type='';
 
     if (transaction is Balance) {
       final balance = transaction as Balance;
@@ -24,6 +25,8 @@ class TransactionDetailScreen extends StatelessWidget {
       final payment = transaction as Payment;
       title = 'Pago';
       amount = 'Pago: -\$${(payment.amount).toStringAsFixed(2)}';
+      category ='Categoría: ${payment.category}';
+      type='Tipo: ${payment.type}';
       date = 'Fecha: ${payment.date}';
     }
 
@@ -38,7 +41,8 @@ class TransactionDetailScreen extends StatelessWidget {
           children: [
             Text(amount, style: TextStyle(color: transaction is Balance ? Colors.green : Colors.red)),
             if (category != null) Text(category),
-            Text(date),
+            if(type !=null)Text(type),
+            Text(date),            
           ],
         ),
       ),

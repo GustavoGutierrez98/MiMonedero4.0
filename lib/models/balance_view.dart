@@ -53,10 +53,10 @@ class _BalanceViewState extends State<BalanceView> {
                 level: 0,
                 text: 'Reporte de Ingresos y Pagos',
               ),
-              pw.Paragraph(text: 'Month: [Month Name Here]'), // Replace with the selected month
+             
               // Loop through balances and payments and add them to the PDF
-              for (final balance in _balances!) pw.Text('Income: \$${balance.amount.toStringAsFixed(2)}'),
-              for (final payment in _payments!) pw.Text('Payment: -\$${payment.amount.toStringAsFixed(2)}'),
+              for (final balance in _balances!) pw.Text('Ingreso: \$${balance.amount.toStringAsFixed(2)}'),
+              for (final payment in _payments!) pw.Text('Pago: -\$${payment.amount.toStringAsFixed(2)} - Categoria: ${payment.category} - Tipo: ${payment.type} - Fecha: ${payment.date}'),
             ],
           );
         },
