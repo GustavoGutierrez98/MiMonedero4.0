@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/models/pagos.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 
 class TransactionDetailScreen extends StatelessWidget {
   final dynamic transaction;
@@ -31,6 +32,7 @@ class TransactionDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detalles del $title'),
       ),
+      endDrawer: autoDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

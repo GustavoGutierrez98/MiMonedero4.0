@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:mimonedero/widgets/navbar.dart'; // Import the database class
 import 'package:mimonedero/widgets/filtro_numerico.dart';
 
@@ -47,6 +48,7 @@ class _VentanaPagoState extends State<VentanaPago> {
         backgroundColor: Colors.deepOrange,
         title: Text('Realizar Pago'),
       ),
+      endDrawer: autoDrawer(),
       bottomNavigationBar: NavBar(),
       backgroundColor: Colors.white,
       body: Center(

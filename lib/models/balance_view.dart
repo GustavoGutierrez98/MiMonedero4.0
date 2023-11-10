@@ -4,10 +4,10 @@ import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/models/details.dart';
 import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/models/pagos.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 class BalanceView extends StatefulWidget {
   final List<Balance> balances;
 
@@ -82,6 +82,7 @@ class _BalanceViewState extends State<BalanceView> {
         backgroundColor: Colors.deepOrange,
         title: Text('Ingresos y Pagos'),
       ),
+      endDrawer: autoDrawer(),
       body: ListView.builder(
  itemCount: (_balances?.length ?? 0) + (_payments?.length ?? 0),
   itemBuilder: (context, index) {

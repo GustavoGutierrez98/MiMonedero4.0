@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:mimonedero/widgets/filtro_numerico.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/splash_screen.dart';
@@ -17,6 +18,7 @@ class IngresoDinero extends StatelessWidget {
         backgroundColor: Colors.deepOrange,
         title: Text('Mi Monedero Virtual'),
       ),
+      endDrawer: autoDrawer(),
       body: MiCartera(),
       bottomNavigationBar: NavBar(),
        floatingActionButton: ElevatedButton(
