@@ -38,7 +38,7 @@ class autoDrawer extends StatelessWidget {
               Navigator.pop(context);//Cierra el Drawer
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => donutGraphPage()),
+                MaterialPageRoute(builder: (context) => DonutGraphPage()),
               );
 
             },
