@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mimonedero/models/donutGraphPage.dart';
+
 
 class autoDrawer extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -31,21 +33,26 @@ class autoDrawer extends StatelessWidget {
             ),
           ),
            ListTile(
-            title: const Text('Opcion 1'),
+            title: const Text('Graficas'),
             onTap: () {
-              // Acciones para la opción 1
+              Navigator.pop(context);//Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => donutGraphPage()),
+              );
+
             },
           ),
            ListTile(
             title: const Text('Opcion 2'),
             onTap: () {
-              // Acciones para la opción 1
+              // Acciones para la opción 2
             },
           ),
            ListTile(
             title: const Text('Opcion 3'),
             onTap: () {
-              // Acciones para la opción 1
+              // Acciones para la opción 3
             },
           ), 
           // Aqui podemos generar mas opciones al drawer
