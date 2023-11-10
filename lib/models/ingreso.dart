@@ -29,7 +29,7 @@ class IngresoDinero extends StatelessWidget {
   ),
 );
   },
-  child: Text('Dinero Depositado'),
+  child: Text('Ingresos y Pagos'),
   style: ElevatedButton.styleFrom(
     primary: Colors.deepOrange, 
   ),
@@ -55,6 +55,8 @@ class Balance {
       'date': date,
     };
   }
+  int get year => DateTime.parse(date).year;
+  int get month => DateTime.parse(date).month;
 }
 
 class MiCartera extends StatefulWidget {

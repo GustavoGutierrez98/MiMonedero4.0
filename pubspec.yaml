@@ -48,7 +48,9 @@ dependencies:
   path_provider: ^2.0.9
   open_file: ^3.1.0
   flutter_datetime_picker: ^1.5.1
-  fl_chart: ^0.40.0
+  fl_chart: ^0.51.0
+  charts_flutter: ^0.12.0
+  font_awesome_flutter: ^10.6.0
 
 dev_dependencies:
   flutter_test:

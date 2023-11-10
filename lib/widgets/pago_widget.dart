@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/models/pagos.dart';
+import 'package:mimonedero/widgets/filtro_numerico.dart';
 
 class PaymentWidget extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: TextField(
+            inputFormatters: [MyFilter()],
             keyboardType: TextInputType.number,
             onChanged: (value) {
               setState(() {

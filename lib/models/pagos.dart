@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/widgets/navbar.dart';
-import 'package:mimonedero/widgets/pago_widget.dart'; // Import the database class
+import 'package:mimonedero/widgets/pago_widget.dart';
+import 'package:mimonedero/widgets/splash_screen.dart'; // Import the database class
 
 class Payment {
   final int? id;
@@ -25,6 +26,8 @@ class Payment {
       'type': type,
     };
   }
+  int get year => DateTime.parse(date).year;
+  int get month => DateTime.parse(date).month;
 }
 
 class VentanaPago extends StatelessWidget {
@@ -40,6 +43,21 @@ class VentanaPago extends StatelessWidget {
       body: Center(
         child: PaymentWidget(),
       ),
+      floatingActionButton: ElevatedButton(
+  onPressed: () {
+    // Navegar a la vista del historial de transacciones (BalanceView)
+    Navigator.push(
+  context,
+  MaterialPageRoute(
+     builder: (context) => SplashScreen(),
+  ),
+);
+  },
+  child: Text('Pagos e Ingresos'),
+  style: ElevatedButton.styleFrom(
+    primary: Colors.deepOrange, 
+  ),
+),
     );
   }
 }

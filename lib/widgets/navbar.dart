@@ -4,7 +4,8 @@ import 'package:mimonedero/models/pantalla_principal.dart';
 import 'package:mimonedero/models/ingreso.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  const NavBar({Key? key}) : super(key: key);
+
 
   @override
   // ignore: library_private_types_in_public_api
