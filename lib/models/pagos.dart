@@ -55,13 +55,9 @@ class VentanaPago extends StatelessWidget {
   },
   child: Text('Pagos e Ingresos'),
   style: ElevatedButton.styleFrom(
-    primary: Colors.deepOrange, 
+    backgroundColor: Colors.deepOrange, 
   ),
 ),
     );
   }
 }
-
-
-
-

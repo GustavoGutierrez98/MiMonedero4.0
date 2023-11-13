@@ -4,10 +4,10 @@ import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/models/details.dart';
 import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/models/pagos.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 class BalanceView extends StatefulWidget {
   final List<Balance> balances;
 
@@ -41,59 +41,37 @@ class _BalanceViewState extends State<BalanceView> {
   }
 
   Future<void> generateAndDownloadPDF() async {
-  final pdf = pw.Document();
+    final pdf = pw.Document();
 
-  // Add content to the PDF
-  pdf.addPage(
-    pw.Page(
-      build: (pw.Context context) {
-        return pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Header(
-              level: 0,
-              text: 'Reporte de Ingresos y Pagos',
-            ),
-            pw.Header(
-              level: 1,
-              text: 'Ingresos:',
-            ),
-            // Loop through balances and add them to the PDF
-            for (final balance in _balances!)
-              pw.Text('Ingreso: \$${balance.amount.toStringAsFixed(2)}'),
-            // Add a section header for payments
-            pw.Header(
-              level: 1,
-              text: 'Pagos:',
-            ),
-            // Loop through payments and add them to the PDF
-            for (final payment in _payments!)
-              pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text('Pago: -\$${payment.amount.toStringAsFixed(2)}'),
-                  pw.Text('Fecha: ${payment.date}'),
-                  pw.Text('Categoría: ${payment.category}'),
-                  pw.Text('Tipo: ${payment.type}'),
-                  // Add some space between payment entries
-                  pw.SizedBox(height: 10),
-                ],
+    // Add content to the PDF
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            children: [
+              pw.Header(
+                level: 0,
+                text: 'Reporte de Ingresos y Pagos',
               ),
-          ],
-        );
-      },
-    ),
-  );
+              pw.Paragraph(text: 'Month: [Month Name Here]'), // Replace with the selected month
+              // Loop through balances and payments and add them to the PDF
+              for (final balance in _balances!) pw.Text('Income: \$${balance.amount.toStringAsFixed(2)}'),
+              for (final payment in _payments!) pw.Text('Payment: -\$${payment.amount.toStringAsFixed(2)}'),
+            ],
+          );
+        },
+      ),
+    );
 
-  // Save the PDF to a file
-  final output = await getTemporaryDirectory();
-  final file = File('${output.path}/income_payments_report.pdf');
-  await file.writeAsBytes(await pdf.save());
+    // Save the PDF to a file
+    final output = await getTemporaryDirectory();
+    final file = File('${output.path}/income_payments_report.pdf');
+    await file.writeAsBytes(await pdf.save());
 
-  // Open the PDF using a PDF viewer
-  OpenFile.open(file.path);
-}
-
+    // Open the PDF using a PDF viewer (You can implement a PDF viewer using a package like 'flutter_pdfview')
+    // For downloading, you can use the 'open_file' package.
+    OpenFile.open(file.path);
+  }
 
 
   @override
@@ -104,6 +82,7 @@ class _BalanceViewState extends State<BalanceView> {
         backgroundColor: Colors.deepOrange,
         title: Text('Ingresos y Pagos'),
       ),
+      endDrawer: autoDrawer(),
       body: ListView.builder(
  itemCount: (_balances?.length ?? 0) + (_payments?.length ?? 0),
   itemBuilder: (context, index) {

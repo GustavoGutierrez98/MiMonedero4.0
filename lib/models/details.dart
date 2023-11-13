@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/models/pagos.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 
 class TransactionDetailScreen extends StatelessWidget {
   final dynamic transaction;
@@ -14,7 +15,6 @@ class TransactionDetailScreen extends StatelessWidget {
     String amount = '';
     String category = '' ;
     String date = '';
-    String type='';
 
     if (transaction is Balance) {
       final balance = transaction as Balance;
@@ -25,8 +25,6 @@ class TransactionDetailScreen extends StatelessWidget {
       final payment = transaction as Payment;
       title = 'Pago';
       amount = 'Pago: -\$${(payment.amount).toStringAsFixed(2)}';
-      category ='Categoría: ${payment.category}';
-      type='Tipo: ${payment.type}';
       date = 'Fecha: ${payment.date}';
     }
 
@@ -34,6 +32,7 @@ class TransactionDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detalles del $title'),
       ),
+      endDrawer: autoDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -41,8 +40,7 @@ class TransactionDetailScreen extends StatelessWidget {
           children: [
             Text(amount, style: TextStyle(color: transaction is Balance ? Colors.green : Colors.red)),
             if (category != null) Text(category),
-            if(type !=null)Text(type),
-            Text(date),            
+            Text(date),
           ],
         ),
       ),
