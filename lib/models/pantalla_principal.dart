@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   void updateTotalBalance(double paymentAmount) {
     setState(() {
-      totalBalance=totalBalance - paymentAmount; // Decrease the total balance
+      totalBalance = totalBalance - paymentAmount; // Decrease the total balance
     });
   }
 
@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
 
     return FutureBuilder<double>(
       // Use a FutureBuilder to fetch the total balance
-      future: getTotalBalance(), // Define this function to fetch the total balance
+      future:
+          getTotalBalance(), // Define this function to fetch the total balance
       builder: (context, snapshot) {
         double totalBalance = snapshot.data ?? 0.0;
 
@@ -61,7 +62,8 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 8),
                 Text(
                   user.email!,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -69,8 +71,10 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
+                  //Balance cantidad
                   '\$${totalBalance.toStringAsFixed(2)}',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
@@ -98,7 +102,8 @@ class _HomePageState extends State<HomePage> {
     final balances = await BalanceDatabase.instance.getAllBalances();
 
     // Calculate the total balance by summing up the 'amount' field
-    double totalBalance = balances.fold(0.0, (total, balance) => total + balance.amount);
+    double totalBalance =
+        balances.fold(0.0, (total, balance) => total + balance.amount);
 
     return totalBalance;
   }
