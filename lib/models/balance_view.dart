@@ -11,22 +11,24 @@ import 'package:pdf/widgets.dart' as pw;
 class BalanceView extends StatefulWidget {
   final List<Balance> balances;
 
-  BalanceView({required this.balances, required double currentBalance, required List payment});
+  BalanceView(
+      {required this.balances,
+      required double currentBalance,
+      required List payment});
 
   @override
   _BalanceViewState createState() => _BalanceViewState();
 }
 
-
-
 class _BalanceViewState extends State<BalanceView> {
-   List<Balance>? _balances;
-   List<Payment>? _payments;
+  List<Balance>? _balances;
+  List<Payment>? _payments;
 
   @override
   void initState() {
     super.initState();
-    _balances = widget.balances; // Initialize _balances with the passed balances
+    _balances =
+        widget.balances; // Initialize _balances with the passed balances
     _loadTransactions();
   }
 
@@ -53,10 +55,31 @@ class _BalanceViewState extends State<BalanceView> {
                 level: 0,
                 text: 'Reporte de Ingresos y Pagos',
               ),
-              pw.Paragraph(text: 'Month: [Month Name Here]'), // Replace with the selected month
-              // Loop through balances and payments and add them to the PDF
-              for (final balance in _balances!) pw.Text('Income: \$${balance.amount.toStringAsFixed(2)}'),
-              for (final payment in _payments!) pw.Text('Payment: -\$${payment.amount.toStringAsFixed(2)}'),
+              pw.Header(
+                level: 1,
+                text: 'Ingresos:',
+              ),
+              // Loop through balances and add them to the PDF
+              for (final balance in _balances!)
+                pw.Text('Ingreso: \$${balance.amount.toStringAsFixed(2)}'),
+              // Add a section header for payments
+              pw.Header(
+                level: 1,
+                text: 'Pagos:',
+              ),
+              // Loop through payments and add them to the PDF
+              for (final payment in _payments!)
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text('Pago: -\$${payment.amount.toStringAsFixed(2)}'),
+                    pw.Text('Fecha: ${payment.date}'),
+                    pw.Text('Categoría: ${payment.category}'),
+                    pw.Text('Tipo: ${payment.type}'),
+                    // Add some space between payment entries
+                    pw.SizedBox(height: 10),
+                  ],
+                ),
             ],
           );
         },
@@ -68,11 +91,9 @@ class _BalanceViewState extends State<BalanceView> {
     final file = File('${output.path}/income_payments_report.pdf');
     await file.writeAsBytes(await pdf.save());
 
-    // Open the PDF using a PDF viewer (You can implement a PDF viewer using a package like 'flutter_pdfview')
-    // For downloading, you can use the 'open_file' package.
+    // Open the PDF using a PDF viewer
     OpenFile.open(file.path);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,57 +105,56 @@ class _BalanceViewState extends State<BalanceView> {
       ),
       endDrawer: autoDrawer(),
       body: ListView.builder(
- itemCount: (_balances?.length ?? 0) + (_payments?.length ?? 0),
-  itemBuilder: (context, index) {
-    if (index < (_balances?.length ?? 0)) {
-      final balance = _balances?[index];
-      if (balance != null) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TransactionDetailScreen(balance),
-              ),
-            );
-          },
-          child: ListTile(
-            title: Text('Ingreso: \$${balance.amount.toStringAsFixed(2)}',
-                style: TextStyle(color: Colors.green))
-          ),
-        );
-      }
-    } else {
-      final payment = _payments?[index - (_balances?.length ?? 0)];
-      if (payment != null) {
-        return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TransactionDetailScreen(payment),
-            ),
-          );
+        itemCount: (_balances?.length ?? 0) + (_payments?.length ?? 0),
+        itemBuilder: (context, index) {
+          if (index < (_balances?.length ?? 0)) {
+            final balance = _balances?[index];
+            if (balance != null) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TransactionDetailScreen(balance),
+                    ),
+                  );
+                },
+                child: ListTile(
+                    title: Text(
+                        'Ingreso: \$${balance.amount.toStringAsFixed(2)}',
+                        style: TextStyle(color: Colors.green))),
+              );
+            }
+          } else {
+            final payment = _payments?[index - (_balances?.length ?? 0)];
+            if (payment != null) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TransactionDetailScreen(payment),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  title: Text('Pago: -\$${payment.amount.toStringAsFixed(2)}',
+                      style: TextStyle(color: Colors.red)),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Fecha: ${payment.date}'),
+                      Text('Categoría: ${payment.category}'),
+                      Text('Tipo: ${payment.type}'),
+                    ],
+                  ),
+                ),
+              );
+            }
+          }
         },
-   child: ListTile(
-              title: Text('Pago: -\$${payment.amount.toStringAsFixed(2)}',
-                  style: TextStyle(color: Colors.red)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Fecha: ${payment.date}'),
-                  Text('Categoría: ${payment.category}'),
-                  Text('Tipo: ${payment.type}'),
-                ],
-              ),
-            ),
-      );
-      }
-    }
-  },
-  
-),
-  floatingActionButton: FloatingActionButton(
+      ),
+      floatingActionButton: FloatingActionButton(
         onPressed: generateAndDownloadPDF,
         child: Icon(Icons.picture_as_pdf),
         backgroundColor: Colors.deepOrange,

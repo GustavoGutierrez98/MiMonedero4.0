@@ -9,6 +9,7 @@ class PaymentWidget extends StatefulWidget {
 }
 
 class _PaymentWidgetState extends State<PaymentWidget> {
+  var _controller = TextEditingController();
   double paymentAmount = 0.0;
   String selectedCategory = 'Alimentos'; // Default category
   String selectedPaymentType = 'Compras';
@@ -26,6 +27,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: TextField(
+            //Texto aquí
+            controller: _controller,
             inputFormatters: [MyFilter()],
             keyboardType: TextInputType.number,
             onChanged: (value) {
@@ -47,7 +50,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
           onChanged: (String? newValue) {
             setState(() {
               selectedPaymentType = newValue!;
-              selectedCategory = (selectedPaymentType == 'Compras') ? 'Alimentos' : 'Luz';
+              selectedCategory =
+                  (selectedPaymentType == 'Compras') ? 'Alimentos' : 'Luz';
             });
           },
         ),
@@ -101,6 +105,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
           ),
         ElevatedButton(
           onPressed: () {
+            _controller.clear();
             if (paymentAmount > 0) {
               makePayment(paymentAmount, selectedCategory);
               ScaffoldMessenger.of(context).showSnackBar(
@@ -115,6 +120,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                 ),
               );
             }
+            //Limpiar el campo de texto y cerrar el teclado numérico
           },
           child: Text('Confirmar Pago'),
           style: ElevatedButton.styleFrom(
