@@ -90,6 +90,8 @@ class DonutGraphPage extends StatelessWidget {
         return const Color.fromARGB(255, 39, 166, 229);
       case 'Muebles':
         return Colors.yellow;
+      case 'Cable':
+        return Colors.pink;
       default:
         return Colors.grey;
     }
@@ -113,6 +115,8 @@ class DonutGraphPage extends StatelessWidget {
         return Icon(LineIcons.tint, color: Colors.white);
       case 'Muebles':
         return Icon(LineIcons.couch, color: Colors.white);
+      case 'Cable':
+        return Icon(LineIcons.television, color: Colors.white);
       default:
         return Icon(LineIcons.questionCircle, color: Colors.white);
     }

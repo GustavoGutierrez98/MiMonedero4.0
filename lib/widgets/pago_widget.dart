@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
+import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/models/pagos.dart';
 import 'package:mimonedero/widgets/filtro_numerico.dart';
 
@@ -13,6 +14,24 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   double paymentAmount = 0.0;
   String selectedCategory = 'Alimentos'; // Default category
   String selectedPaymentType = 'Compras';
+  double currentBalance=0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCurrentBalance();
+  }
+
+  // Método para obtener el saldo actual
+  void fetchCurrentBalance() async {
+    List<Balance> balances = await BalanceDatabase.instance.getAllBalances();
+    if (balances.isNotEmpty) {
+      setState(() {
+        currentBalance = balances.last.amount;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +118,10 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                 value: 'Internet',
                 child: Text('Internet'),
               ),
+              DropdownMenuItem<String>(
+                value: 'Cable',
+                child: Text('Cable'),
+              ),
               // Add more items as needed
             ],
             onChanged: (String? newValue) {
@@ -110,17 +133,26 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         ElevatedButton(
           onPressed: () {
             _controller.clear();
-            if (paymentAmount > 0) {
+            if (currentBalance > 0 && paymentAmount > 0 && paymentAmount <= currentBalance) {
+              // Verificar que el saldo sea mayor que 0 y el monto del pago no exceda el saldo
               makePayment(paymentAmount, selectedCategory);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Pago realizado con éxito.'),
                 ),
               );
-            } else {
+            }
+             else if (currentBalance <= 0) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Ingrese un monto válido.'),
+                  content: Text('No tienes suficiente saldo para realizar el pago.'),
+                ),
+              );
+            } 
+            else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Ingrese un monto válido que no exceda su saldo disponible.'),
                 ),
               );
             }
