@@ -8,6 +8,7 @@ import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+
 class BalanceView extends StatefulWidget {
   final List<Balance> balances;
 
@@ -23,6 +24,11 @@ class BalanceView extends StatefulWidget {
 class _BalanceViewState extends State<BalanceView> {
   List<Balance>? _balances;
   List<Payment>? _payments;
+
+ static const String sortByDate = 'Sort by Date';
+  static const String sortByCategory = 'Sort by Category';
+
+  String _currentSortOption = sortByDate; // Default sort option
 
   @override
   void initState() {
@@ -95,6 +101,21 @@ class _BalanceViewState extends State<BalanceView> {
     OpenFile.open(file.path);
   }
 
+  void _sortByCategory() {
+    setState(() {
+      _currentSortOption = sortByCategory;
+      _payments?.sort((a, b) => a.category.compareTo(b.category));
+    });
+  }
+
+  void _sortByDate() {
+    setState(() {
+      _currentSortOption = sortByDate;
+      _balances?.sort((a, b) => a.date.compareTo(b.date));
+      _payments?.sort((a, b) => a.date.compareTo(b.date));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +123,25 @@ class _BalanceViewState extends State<BalanceView> {
       appBar: AppBar(
         backgroundColor: Colors.deepOrange,
         title: Text('Ingresos y Pagos'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == sortByDate) {
+                _sortByDate();
+              } else if (value == sortByCategory) {
+                _sortByCategory();
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [sortByDate, sortByCategory].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       endDrawer: autoDrawer(),
       body: ListView.builder(
