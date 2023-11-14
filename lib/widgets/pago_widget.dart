@@ -71,6 +71,10 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                 value: 'Electrodomésticos',
                 child: Text('Electrodomésticos'),
               ),
+               DropdownMenuItem<String>(
+                value: 'VideoJuegos',
+                child: Text('VideoJuegos'),
+              ),
               // Add more items as needed
             ],
             onChanged: (String? newValue) {
