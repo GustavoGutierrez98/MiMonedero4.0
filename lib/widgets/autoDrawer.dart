@@ -46,7 +46,7 @@ class autoDrawer extends StatelessWidget {
            ListTile(
             title: const Text('Opcion 2'),
             onTap: () {
-              // Acciones para la opción 2
+              
             },
           ),
            ListTile(
