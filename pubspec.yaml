@@ -52,6 +52,7 @@ dependencies:
   charts_flutter: ^0.12.0
   font_awesome_flutter: ^10.6.0
   line_icons: ^2.0.3
+  bordered_text: ^2.0.0
 
 dev_dependencies:
   flutter_test:
