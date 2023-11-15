@@ -85,15 +85,14 @@ class _MiCarteraState extends State<MiCartera> {
       backgroundColor: Colors.white,
       body: Container(
         decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/bank2.png'), 
-                    fit: BoxFit.cover),
-                    ),
+          image: DecorationImage(
+              image: AssetImage('assets/bank2.png'), fit: BoxFit.cover),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Ingrese Saldo:',
                 style: TextStyle(fontSize: 24),
               ),
@@ -104,8 +103,8 @@ class _MiCarteraState extends State<MiCartera> {
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary:
-                      Colors.deepOrange, // Establecer el color de fondo a naranja
+                  primary: Colors
+                      .deepOrange, // Establecer el color de fondo a naranja
                 ),
                 onPressed: () {
                   // cuadro de diálogo para ingresar la cantidad a depositar
@@ -150,7 +149,7 @@ class _MiCarteraState extends State<MiCartera> {
                 onPressed: () {
                   // Guardar el saldo actual en una variable
                   final double currentBalance = balance;
-      
+
                   // Navegar a la vista del historial de transacciones (BalanceView) con el saldo actual
                   Navigator.push(
                     context,
@@ -168,7 +167,7 @@ class _MiCarteraState extends State<MiCartera> {
                   backgroundColor: Colors.deepOrange,
                 ),
               ),
-      
+
               //Aquí sí funciona, lmao. El widtet de alineación no funciona porque está dentro de una columna, no al final del Scaffold
             ],
           ),
