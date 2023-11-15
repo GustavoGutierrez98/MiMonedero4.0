@@ -14,7 +14,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   double paymentAmount = 0.0;
   String selectedCategory = 'Alimentos'; // Default category
   String selectedPaymentType = 'Compras';
-  double currentBalance=0.0;
+  double currentBalance = 0.0;
 
   @override
   void initState() {
@@ -31,7 +31,6 @@ class _PaymentWidgetState extends State<PaymentWidget> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         if (selectedPaymentType == 'Compras')
           DropdownButton<String>(
             value: selectedCategory,
-            items: <DropdownMenuItem<String>>[
+            items: const <DropdownMenuItem<String>>[
               DropdownMenuItem<String>(
                 value: 'Alimentos',
                 child: Text('Alimentos'),
@@ -90,7 +89,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                 value: 'Electrodomésticos',
                 child: Text('Electrodomésticos'),
               ),
-               DropdownMenuItem<String>(
+              DropdownMenuItem<String>(
                 value: 'VideoJuegos',
                 child: Text('VideoJuegos'),
               ),
@@ -133,26 +132,26 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         ElevatedButton(
           onPressed: () {
             _controller.clear();
-            if (currentBalance > 0 && paymentAmount > 0 && paymentAmount <= currentBalance) {
-              // Verificar que el saldo sea mayor que 0 y el monto del pago no exceda el saldo
+            if (paymentAmount > 0 && paymentAmount <= currentBalance) {
+              // Verificar que el monto del pago sea mayor que 0 y no exceda el saldo
               makePayment(paymentAmount, selectedCategory);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Pago realizado con éxito.'),
                 ),
               );
-            }
-             else if (currentBalance <= 0) {
+            } else if (paymentAmount > 0 && currentBalance <= 0 && paymentAmount <= currentBalance) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('No tienes suficiente saldo para realizar el pago.'),
+                  content:
+                      Text('No tienes suficiente saldo para realizar el pago.'),
                 ),
               );
-            } 
-            else {
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Ingrese un monto válido que no exceda su saldo disponible.'),
+                  content: Text(
+                      'Ingrese un monto válido que no exceda su saldo disponible.'),
                 ),
               );
             }
@@ -167,18 +166,45 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     );
   }
 
-  void makePayment(double amount, String category) async {
-    final newPayment = Payment(
-      amount: amount,
-      date: DateTime.now().toString(),
-      category: selectedPaymentType,
-      type: category,
-    );
-    final insertedId = await PaymentDatabase.instance.insertPayment(newPayment);
-    if (insertedId != null) {
+ void makePayment(double amount, String category) async {
+  final newPayment = Payment(
+    amount: amount,
+    date: DateTime.now().toString(),
+    category: selectedPaymentType,
+    type: category,
+  );
+
+  final insertedId = await PaymentDatabase.instance.insertPayment(newPayment);
+
+  if (insertedId != null) {
+    // Actualizar el saldo después de realizar el pago
+    final updatedBalance = currentBalance - amount;
+
+    // Verificar que el saldo no quede menor a cero
+    if (updatedBalance >= 0) {
+      // Actualizar el saldo en la base de datos
+      await BalanceDatabase.instance.insertBalance(Balance(amount: updatedBalance, date: ''));
+
       // Handle successful payment insertion
     } else {
-      // Handle the case where payment insertion failed
+      // Manejar el caso en el que el saldo quede menor a cero
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: El saldo no puede ser menor a cero.'),
+        ),
+      );
+      // Puedes agregar más lógica aquí según tus necesidades
     }
+  } else {
+    // Handle the case where payment insertion failed
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error al realizar el pago. Por favor, inténtalo de nuevo.'),
+      ),
+    );
+    // Puedes agregar más lógica aquí según tus necesidades
   }
+}
+
+
 }

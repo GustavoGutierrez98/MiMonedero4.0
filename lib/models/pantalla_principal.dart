@@ -16,24 +16,24 @@ class _HomePageState extends State<HomePage> {
   double totalBalance = 0.0; // Initialize the total balance
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTotalBalance();
-  }
+ @override
+void initState() {
+  super.initState();
+  _loadTotalBalance();
+}
 
-  Future<void> _loadTotalBalance() async {
+Future<void> _loadTotalBalance() async {
+  try {
     final balance = await getTotalBalance();
     setState(() {
       totalBalance = balance;
     });
+  } catch (error) {
+    // Manejar el error de manera apropiada, por ejemplo, mostrando un mensaje al usuario
+    print('Error al cargar el saldo: $error');
   }
+}
 
-  void updateTotalBalance(double paymentAmount) {
-    setState(() {
-      totalBalance = totalBalance - paymentAmount; // Decrease the total balance
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       future:
           getTotalBalance(), // Define this function to fetch the total balance
       builder: (context, snapshot) {
-        double totalBalance = snapshot.data ?? 0.0;
+        totalBalance = snapshot.data ?? 0.0;
         return Scaffold(
           key: _scaffoldKey, //Asigna la llave al scaffold
           appBar: AppBar(

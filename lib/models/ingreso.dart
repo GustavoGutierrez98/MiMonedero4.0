@@ -30,7 +30,7 @@ class IngresoDinero extends StatelessWidget {
             ),
           );
         },
-        child: Text('Dinero Depositado'),
+        child: Text('Ingresos y Pagos'),
         style: ElevatedButton.styleFrom(
           primary: Colors.deepOrange,
         ),
@@ -165,7 +165,7 @@ class _MiCarteraState extends State<MiCartera> {
                 },
                 child: Text('Guardar'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.deepOrange,
+                  backgroundColor: Colors.deepOrange,
                 ),
               ),
       
