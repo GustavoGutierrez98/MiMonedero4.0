@@ -7,13 +7,12 @@ class TransactionDetailScreen extends StatelessWidget {
   final dynamic transaction;
 
   TransactionDetailScreen(this.transaction);
- 
 
   @override
   Widget build(BuildContext context) {
-     String title = '';
+    String title = '';
     String amount = '';
-    String category = '' ;
+    String category = '';
     String date = '';
 
     if (transaction is Balance) {
@@ -30,7 +29,8 @@ class TransactionDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalles del $title'),
+        title: Text('Importe'),
+        //title: Text('Detalles del $title'),
       ),
       endDrawer: autoDrawer(),
       body: Padding(
@@ -38,7 +38,9 @@ class TransactionDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(amount, style: TextStyle(color: transaction is Balance ? Colors.green : Colors.red)),
+            Text(amount,
+                style: TextStyle(
+                    color: transaction is Balance ? Colors.green : Colors.red)),
             if (category != null) Text(category),
             Text(date),
           ],
