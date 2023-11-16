@@ -94,11 +94,11 @@ class _HomePageState extends State<HomePage> {
 
   Future<double> getTotalIngresos() async {
     final ingresos = await BalanceDatabase.instance.getAllBalances();
-    return ingresos.fold<double>(0.0, (total, ingreso) => ingreso.amount);
+    return ingresos.fold<double>(0.0, (total, ingreso) => total + ingreso.amount);
   }
 
   Future<double> getTotalPagos() async {
     final pagos = await PaymentDatabase.instance.getAllPayments();
-    return pagos.fold<double>(0.0, (total, pago) => pago.amount);
+    return pagos.fold<double>(0.0, (total, pago) => total + pago.amount);
   }
 }
