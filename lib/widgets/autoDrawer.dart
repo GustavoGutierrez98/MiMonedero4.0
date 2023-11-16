@@ -33,7 +33,7 @@ class autoDrawer extends StatelessWidget {
             ),
           ),
            ListTile(
-            title: const Text('Graficas'),
+            title: const Text('Grafica de Gastos'),
             onTap: () {
               Navigator.pop(context);//Cierra el Drawer
               Navigator.push(
@@ -43,18 +43,7 @@ class autoDrawer extends StatelessWidget {
 
             },
           ),
-           ListTile(
-            title: const Text('Opcion 2'),
-            onTap: () {
-              
-            },
-          ),
-           ListTile(
-            title: const Text('Opcion 3'),
-            onTap: () {
-              // Acciones para la opción 3
-            },
-          ), 
+            
           // Aqui podemos generar mas opciones al drawer
           Divider(
             color: Colors.orange,

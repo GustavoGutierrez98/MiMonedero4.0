@@ -9,6 +9,24 @@ import 'balance_view.dart';
 
 List<Balance> _balances = [];
 
+class Balance {
+  final int? id;
+  final double amount;
+  final String date;
+
+  Balance({
+    this.id,
+    required this.amount,
+    required this.date,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'amount': amount,
+      'date': date,
+    };
+  }
+}
 class IngresoDinero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,24 +57,7 @@ class IngresoDinero extends StatelessWidget {
   }
 }
 
-class Balance {
-  final int? id;
-  final double amount;
-  final String date;
 
-  Balance({
-    this.id,
-    required this.amount,
-    required this.date,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'amount': amount,
-      'date': date,
-    };
-  }
-}
 
 class MiCartera extends StatefulWidget {
   @override
@@ -86,7 +87,7 @@ class _MiCarteraState extends State<MiCartera> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/bank2.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/bank6.png'), fit: BoxFit.cover),
         ),
         child: Center(
           child: Column(
@@ -94,7 +95,8 @@ class _MiCarteraState extends State<MiCartera> {
             children: <Widget>[
               const Text(
                 'Ingrese Saldo:',
-                style: TextStyle(fontSize: 24),
+                style: TextStyle(fontSize: 24,),
+                
               ),
               Text(
                 '\$${balance.toStringAsFixed(2)}',
@@ -103,7 +105,7 @@ class _MiCarteraState extends State<MiCartera> {
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors
+                  backgroundColor: Colors
                       .deepOrange, // Establecer el color de fondo a naranja
                 ),
                 onPressed: () {

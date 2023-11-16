@@ -40,8 +40,15 @@ class VentanaPago extends StatelessWidget {
       ),
       bottomNavigationBar: NavBar(),
       backgroundColor: Colors.white,
-      body: Center(
-        child: PaymentWidget(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/bank6.png'), fit: BoxFit.cover),
+        ),
+        child: Center(
+          child: PaymentWidget(),
+          
+        ),
       ),
       floatingActionButton: ElevatedButton(
   onPressed: () {

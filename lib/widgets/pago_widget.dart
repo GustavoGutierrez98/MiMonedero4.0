@@ -166,45 +166,23 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     );
   }
 
- void makePayment(double amount, String category) async {
+void makePayment(double amount, String category) async {
   final newPayment = Payment(
     amount: amount,
     date: DateTime.now().toString(),
-    category: selectedPaymentType,
+    category: selectedPaymentType, // Define or replace selectedPaymentType
     type: category,
   );
 
   final insertedId = await PaymentDatabase.instance.insertPayment(newPayment);
 
   if (insertedId != null) {
-    // Actualizar el saldo después de realizar el pago
-    final updatedBalance = currentBalance - amount;
-
-    // Verificar que el saldo no quede menor a cero
-    if (updatedBalance >= 0) {
-      // Actualizar el saldo en la base de datos
-      await BalanceDatabase.instance.insertBalance(Balance(amount: updatedBalance, date: ''));
-
-      // Handle successful payment insertion
-    } else {
-      // Manejar el caso en el que el saldo quede menor a cero
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: El saldo no puede ser menor a cero.'),
-        ),
-      );
-      // Puedes agregar más lógica aquí según tus necesidades
-    }
+    // Puedes agregar lógica adicional aquí según tus necesidades
+    print('Pago realizado con éxito. ID de pago: $insertedId');
   } else {
-    // Handle the case where payment insertion failed
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error al realizar el pago. Por favor, inténtalo de nuevo.'),
-      ),
-    );
+    // Puedes manejar el caso donde la inserción del pago falla
+    print('Error al realizar el pago. Por favor, inténtalo de nuevo.');
     // Puedes agregar más lógica aquí según tus necesidades
   }
 }
-
-
 }
