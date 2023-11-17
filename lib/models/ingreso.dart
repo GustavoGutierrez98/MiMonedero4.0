@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:mimonedero/widgets/filtro_numerico.dart';
+import 'package:mimonedero/widgets/lineal.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/splash_screen.dart';
 // ignore: unused_import
 import 'balance_view.dart';
-
+double balance = 0.0;
 List<Balance> _balances = [];
 
 class Balance {
@@ -93,6 +94,7 @@ class _MiCarteraState extends State<MiCartera> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              LinealCharts(balances: _balances),
               const Text(
                 'Ingrese Saldo:',
                 style: TextStyle(fontSize: 24,),
@@ -147,28 +149,7 @@ class _MiCarteraState extends State<MiCartera> {
                 },
                 child: Text('Depositar Dinero'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // Guardar el saldo actual en una variable
-                  final double currentBalance = balance;
-
-                  // Navegar a la vista del historial de transacciones (BalanceView) con el saldo actual
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BalanceView(
-                        balances: _balances,
-                        currentBalance: currentBalance,
-                        payment: [],
-                      ),
-                    ),
-                  );
-                },
-                child: Text('Guardar'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                ),
-              ),
+              
 
               //Aquí sí funciona, lmao. El widtet de alineación no funciona porque está dentro de una columna, no al final del Scaffold
             ],

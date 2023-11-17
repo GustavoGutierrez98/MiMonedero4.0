@@ -3,56 +3,48 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_flutter/src/text_element.dart' as elements;
 import 'package:charts_flutter/src/text_style.dart' as styles;
+import 'package:mimonedero/models/ingreso.dart';
 
 class LinealCharts extends StatelessWidget {
-  const LinealCharts({Key? key}) : super(key: key);
+  final List<Balance> balances;
+
+  const LinealCharts({Key? key, required this.balances}) : super(key: key);
 
   static String? pointerAmount;
   static String? pointerDay;
 
   @override
   Widget build(BuildContext context) {
-    
-    final data = [
-      Expenses(2, 120),
-      Expenses(3, 218),
-      Expenses(4, 95),
-      Expenses(5, 360),
-    ];
-     
-     List<charts.Series<Expenses, int>> series = [
-      charts.Series<Expenses, int>(
-       id: 'Lineal',
-       domainFn: (v,i) => v.day,
-       measureFn: (v,i) => v.expense,
-       data: data
+    List<charts.Series<Balance, DateTime>> series = [
+      charts.Series<Balance, DateTime>(
+        id: 'Lineal',
+        domainFn: (balance, _) => DateTime.parse(balance.date),
+        measureFn: (balance, _) => balance.amount,
+        data: balances,
       )
-      ];
-
+    ];
 
     return Center(
       child: SizedBox(
         height: 350.0,
-        child: charts.LineChart(
+        child: charts.TimeSeriesChart(
           series,
           selectionModels: [
             charts.SelectionModelConfig(
-              changedListener: (charts.SelectionModel model){
-                if(model.hasDatumSelection){
-                   pointerAmount = model.selectedSeries[0]
-                   .measureFn(model.selectedDatum[0].index)
-                   ?.toStringAsFixed(2);
-                   pointerDay = model.selectedSeries[0]
-                   .domainFn(model.selectedDatum[0].index)
-                   ?.toString();
+              changedListener: (charts.SelectionModel model) {
+                if (model.hasDatumSelection) {
+                  pointerAmount = model.selectedSeries[0]
+                      .measureFn(model.selectedDatum[0].index)
+                      ?.toStringAsFixed(2);
+                  pointerDay = model.selectedSeries[0]
+                      .domainFn(model.selectedDatum[0].index)
+                      ?.toString();
                 }
-              }
+              },
             )
           ],
           behaviors: [
-            charts.LinePointHighlighter(
-              symbolRenderer: MySymbolRenderer()
-            )
+            charts.LinePointHighlighter(symbolRenderer: MySymbolRenderer()),
           ],
         ),
       ),

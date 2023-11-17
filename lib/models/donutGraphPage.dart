@@ -35,10 +35,7 @@ class _DonutGraphPageState extends State<DonutGraphPage> {
               ),
             ),
           ),
-          if (!_isExpanded)
-            Expanded(
-              child: LineChartPage(), // Mostrar el LineChartPage cuando no está expandido
-            ),
+       
           if (_isExpanded)
             Expanded(
               child: _buildDonutChart(), // Mostrar la gráfica de dona cuando está expandido
