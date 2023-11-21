@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mimonedero/models/donutGraphPage.dart';
-
+import 'package:mimonedero/widgets/graficalineal.dart';
 
 class autoDrawer extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -32,24 +32,23 @@ class autoDrawer extends StatelessWidget {
               ],
             ),
           ),
-           ListTile(
+          ListTile(
             title: const Text('Grafica de Gastos'),
             onTap: () {
-              Navigator.pop(context);//Cierra el Drawer
+              Navigator.pop(context); //Cierra el Drawer
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DonutGraphPage()),
               );
-
             },
           ),
-            
+
           // Aqui podemos generar mas opciones al drawer
           Divider(
             color: Colors.orange,
           ),
           ListTile(
-              title: const Text('Cerrar sesion'),   
+              title: const Text('Cerrar sesion'),
               onTap: () {
                 FirebaseAuth.instance.signOut();
               }) //genera un divisor visual

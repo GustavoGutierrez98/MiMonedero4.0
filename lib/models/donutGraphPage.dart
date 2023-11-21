@@ -12,21 +12,27 @@ class DonutGraphPage extends StatefulWidget {
 }
 
 class _DonutGraphPageState extends State<DonutGraphPage> {
-  bool _isExpanded = false;
+  bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Gráficos'),
-      ),
+        appBar: AppBar(
+          title: Text('Gráficos'),
+        ),
+        body: Container(
+          child: _buildDonutChart(),
+        )
+        /*
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ListTile(
             title: Center(
               child: IconButton(
-                icon: _isExpanded ? Icon(Icons.pie_chart) : Icon(Icons.show_chart),
+                icon: _isExpanded
+                    ? Icon(Icons.pie_chart)
+                    : Icon(Icons.show_chart),
                 onPressed: () {
                   setState(() {
                     _isExpanded = !_isExpanded;
@@ -35,16 +41,15 @@ class _DonutGraphPageState extends State<DonutGraphPage> {
               ),
             ),
           ),
-       
           if (_isExpanded)
             Expanded(
-              child: _buildDonutChart(), // Mostrar la gráfica de dona cuando está expandido
+              child:
+                  _buildDonutChart(), // Mostrar la gráfica de dona cuando está expandido
             ),
         ],
-      ),
-    );
+      ),*/
+        );
   }
-
 
   Widget _buildDonutChart() {
     return FutureBuilder<List<PieChartSectionData>>(
@@ -69,7 +74,6 @@ class _DonutGraphPageState extends State<DonutGraphPage> {
     );
   }
 }
-
 
 Future<List<PieChartSectionData>> fetchUserPaymentHistory() async {
   // Replace this with the actual method to fetch the user's payment history
