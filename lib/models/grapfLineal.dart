@@ -1,18 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/models/ingreso.dart';
 import 'package:mimonedero/widgets/lineal.dart';
 
-class GraficaLineal extends StatelessWidget {
-  final List<Balance> _balances = [
-    // inicializa tu lista de balances aquí según tus necesidades
-  ];
+class GraficaLineal extends StatefulWidget {
+  @override
+  _GraficaLinealState createState() => _GraficaLinealState();
+}
 
-   GraficaLineal({Key? key, required List<Balance> balances}) : super(key: key);
+class _GraficaLinealState extends State<GraficaLineal> {
+  late List<Balance> _balances;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalances();
+  }
+
+  Future<void> _loadBalances() async {
+    final balances = await BalanceDatabase.instance.getAllBalances();
+    setState(() {
+      _balances = balances;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LinealCharts(balances: _balances),
+      appBar: AppBar(
+        title: Text('Gráfica Lineal'),
+      ),
+      body: _balances != null
+          ? LinealCharts(balances: _balances)
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

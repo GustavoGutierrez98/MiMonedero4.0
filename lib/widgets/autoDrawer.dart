@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mimonedero/models/donutGraphPage.dart';
+import 'package:mimonedero/models/grapfLineal.dart';
 
 class autoDrawer extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -38,6 +39,16 @@ class autoDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DonutGraphPage()),
+              );
+            },
+          ),
+           ListTile(
+            title: const Text('Grafica de Gastos'),
+            onTap: () {
+              Navigator.pop(context); //Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GraficaLineal()),
               );
             },
           ),

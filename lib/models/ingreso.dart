@@ -94,7 +94,6 @@ class _MiCarteraState extends State<MiCartera> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              LinealCharts(balances: _balances),
               const Text(
                 'Ingrese Saldo:',
                 style: TextStyle(fontSize: 24,),
