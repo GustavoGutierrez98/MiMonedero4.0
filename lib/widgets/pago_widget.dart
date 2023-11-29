@@ -24,13 +24,17 @@ class _PaymentWidgetState extends State<PaymentWidget> {
 
   // Método para obtener el saldo actual
   void fetchCurrentBalance() async {
-    List<Balance> balances = await BalanceDatabase.instance.getAllBalances();
-    if (balances.isNotEmpty) {
-      setState(() {
-        currentBalance = balances.last.amount;
-      });
-    }
+  List<Balance> balances = await BalanceDatabase.instance.getAllBalances();
+  double totalBalance = 0.0;
+
+  for (Balance balance in balances) {
+    totalBalance += balance.amount;
   }
+
+  setState(() {
+    currentBalance = totalBalance;
+  });
+}
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
+import 'package:mimonedero/models/ingreso.dart';
+import 'package:mimonedero/models/pagos.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/autoDrawer.dart';
 
@@ -94,7 +96,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<double> getTotalIngresos() async {
     final ingresos = await BalanceDatabase.instance.getAllBalances();
-    return ingresos.fold<double>(0.0, (total, ingreso) => total + ingreso.amount);
+    return ingresos.fold<double>(
+        0.0, (total, ingreso) => total + ingreso.amount);
   }
 
   Future<double> getTotalPagos() async {

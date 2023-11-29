@@ -1,10 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:line_icons/line_icons.dart';
 import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/models/pagos.dart';
-import 'package:mimonedero/widgets/graficalineal.dart';
 
 class DonutGraphPage extends StatefulWidget {
   @override
@@ -12,39 +10,18 @@ class DonutGraphPage extends StatefulWidget {
 }
 
 class _DonutGraphPageState extends State<DonutGraphPage> {
-  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Gráficos'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          ListTile(
-            title: Center(
-              child: IconButton(
-                icon: _isExpanded ? Icon(Icons.pie_chart) : Icon(Icons.show_chart),
-                onPressed: () {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                  });
-                },
-              ),
-            ),
-          ),
-       
-          if (_isExpanded)
-            Expanded(
-              child: _buildDonutChart(), // Mostrar la gráfica de dona cuando está expandido
-            ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Gráficos'),
+        ),
+        body: Container(
+          child: _buildDonutChart(),
+        )
+        );
   }
-
 
   Widget _buildDonutChart() {
     return FutureBuilder<List<PieChartSectionData>>(
@@ -70,24 +47,21 @@ class _DonutGraphPageState extends State<DonutGraphPage> {
   }
 }
 
-
 Future<List<PieChartSectionData>> fetchUserPaymentHistory() async {
-  // Replace this with the actual method to fetch the user's payment history
-  // You should retrieve payment data and calculate percentages based on payment types
   List<Payment> userPayments = await PaymentDatabase.instance.getAllPayments();
 
   Map<String, double> paymentTypeCounts = Map<String, double>();
 
-  // Calculate the count for each payment type
+  // Calculas las cuentas por el tipo de pago
   userPayments.forEach((payment) {
     paymentTypeCounts.update(payment.type, (value) => value + 1,
         ifAbsent: () => 1);
   });
 
-  // Calculate the total count of payments
+  // Calcula el total de las cuentas de pagos
   double totalCount = userPayments.length.toDouble();
 
-  // Calculate percentages
+  // Calcula porcentajes
   List<PieChartSectionData> sections = paymentTypeCounts.entries
       .map((entry) => PieChartSectionData(
             color: getColorForPaymentType(entry.key),
@@ -106,8 +80,8 @@ Future<List<PieChartSectionData>> fetchUserPaymentHistory() async {
 }
 
 Color getColorForPaymentType(String paymentType) {
-  // Define colors for different payment types
-  // Add more cases if needed
+  // Define los colores por los diferentes tipos de pagos
+  // Añade mas casos si es necesario
   switch (paymentType) {
     case 'Videojuegos':
       return Colors.deepPurple;
