@@ -43,7 +43,7 @@ class autoDrawer extends StatelessWidget {
             },
           ),
            ListTile(
-            title: const Text('Grafica de Gastos'),
+            title: const Text('Grafica de Ingresos'),
             onTap: () {
               Navigator.pop(context); //Cierra el Drawer
               Navigator.push(

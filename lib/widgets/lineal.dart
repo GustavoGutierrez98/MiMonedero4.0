@@ -83,7 +83,7 @@ class MySymbolRenderer extends charts.CircleSymbolRenderer{
         bounds.height +18
 
       ),
-      fill: charts.ColorUtil.fromDartColor(Colors.orange),
+      fill: charts.ColorUtil.fromDartColor(Colors.deepOrange),
       stroke: charts.ColorUtil.fromDartColor(Colors.black),
       strokeWidthPx: 1
     );

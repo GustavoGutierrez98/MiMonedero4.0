@@ -29,6 +29,7 @@ class _GraficaLinealState extends State<GraficaLineal> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gráfica Lineal'),
+        backgroundColor: Colors.deepOrange,
       ),
       body: _balances != null
           ? LinealCharts(balances: _balances)
