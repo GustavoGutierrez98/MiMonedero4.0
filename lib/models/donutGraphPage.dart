@@ -10,6 +10,7 @@ class DonutGraphPage extends StatefulWidget {
 }
 
 class _DonutGraphPageState extends State<DonutGraphPage> {
+  bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,31 @@ class _DonutGraphPageState extends State<DonutGraphPage> {
         body: Container(
           child: _buildDonutChart(),
         )
+        /*
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          ListTile(
+            title: Center(
+              child: IconButton(
+                icon: _isExpanded
+                    ? Icon(Icons.pie_chart)
+                    : Icon(Icons.show_chart),
+                onPressed: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+              ),
+            ),
+          ),
+          if (_isExpanded)
+            Expanded(
+              child:
+                  _buildDonutChart(), // Mostrar la gráfica de dona cuando está expandido
+            ),
+        ],
+      ),*/
         );
   }
 
