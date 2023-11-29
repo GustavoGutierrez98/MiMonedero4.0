@@ -24,17 +24,17 @@ class _PaymentWidgetState extends State<PaymentWidget> {
 
   // Método para obtener el saldo actual
   void fetchCurrentBalance() async {
-  List<Balance> balances = await BalanceDatabase.instance.getAllBalances();
-  double totalBalance = 0.0;
+    List<Balance> balances = await BalanceDatabase.instance.getAllBalances();
+    double totalBalance = 0.0;
 
-  for (Balance balance in balances) {
-    totalBalance += balance.amount;
+    for (Balance balance in balances) {
+      totalBalance += balance.amount;
+    }
+
+    setState(() {
+      currentBalance = totalBalance;
+    });
   }
-
-  setState(() {
-    currentBalance = totalBalance;
-  });
-}
 
   @override
   Widget build(BuildContext context) {
@@ -136,30 +136,32 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         ElevatedButton(
           onPressed: () {
             _controller.clear();
-            if (paymentAmount > 0 && paymentAmount <= currentBalance) {
-              // Verificar que el monto del pago sea mayor que 0 y no exceda el saldo
+
+            if (paymentAmount > 0 &&
+                paymentAmount <= currentBalance &&
+                currentBalance > 0) {
               makePayment(paymentAmount, selectedCategory);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Pago realizado con éxito.'),
                 ),
               );
-            } else if (paymentAmount > 0 && currentBalance <= 0 && paymentAmount <= currentBalance) {
+            } else if (paymentAmount > currentBalance && currentBalance == 0) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content:
-                      Text('No tienes suficiente saldo para realizar el pago.'),
+                      Text('No puedes realizar el pago. Tu saldo actual es 0.'),
                 ),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      'Ingrese un monto válido que no exceda su saldo disponible.'),
+                    'Ingrese un monto válido que no exceda su saldo disponible.',
+                  ),
                 ),
               );
             }
-            //Limpiar el campo de texto y cerrar el teclado numérico
           },
           child: Text('Confirmar Pago'),
           style: ElevatedButton.styleFrom(
@@ -170,23 +172,23 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     );
   }
 
-void makePayment(double amount, String category) async {
-  final newPayment = Payment(
-    amount: amount,
-    date: DateTime.now().toString(),
-    category: selectedPaymentType, // Define or replace selectedPaymentType
-    type: category,
-  );
+  void makePayment(double amount, String category) async {
+    final newPayment = Payment(
+      amount: amount,
+      date: DateTime.now().toString(),
+      category: selectedPaymentType, // Define or replace selectedPaymentType
+      type: category,
+    );
 
-  final insertedId = await PaymentDatabase.instance.insertPayment(newPayment);
+    final insertedId = await PaymentDatabase.instance.insertPayment(newPayment);
 
-  if (insertedId != null) {
-    // Puedes agregar lógica adicional aquí según tus necesidades
-    print('Pago realizado con éxito. ID de pago: $insertedId');
-  } else {
-    // Puedes manejar el caso donde la inserción del pago falla
-    print('Error al realizar el pago. Por favor, inténtalo de nuevo.');
-    // Puedes agregar más lógica aquí según tus necesidades
+    if (insertedId != null) {
+      // Puedes agregar lógica adicional aquí según tus necesidades
+      print('Pago realizado con éxito. ID de pago: $insertedId');
+    } else {
+      // Puedes manejar el caso donde la inserción del pago falla
+      print('Error al realizar el pago. Por favor, inténtalo de nuevo.');
+      // Puedes agregar más lógica aquí según tus necesidades
+    }
   }
-}
 }
