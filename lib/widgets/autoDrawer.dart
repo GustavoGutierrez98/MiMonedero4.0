@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mimonedero/models/donutGraphPage.dart';
 import 'package:mimonedero/models/grapfLineal.dart';
+import 'package:mimonedero/models/recordatorio.dart';
 
 class autoDrawer extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -49,6 +50,16 @@ class autoDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => GraficaLineal()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Recordatorios'),
+            onTap: () {
+              Navigator.pop(context); //Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ReminderScreen()),
               );
             },
           ),

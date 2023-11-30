@@ -24,8 +24,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
 
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
-    final InitializationSettings initializationSettings =
+        AndroidInitializationSettings('mimonedero.png');
+    const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
@@ -37,7 +37,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
   }
 
   Future<void> scheduleNotification(String serviceName, DateTime date) async {
-    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'payment_channel',
       'Recordatorios de Pagos',
@@ -47,7 +47,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
       ticker: 'ticker',
     );
 
-    final NotificationDetails platformChannelSpecifics =
+    const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.schedule(
@@ -92,11 +92,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Seleccionar Fecha:'),
+                const Text('Seleccionar Fecha:'),
                 ElevatedButton(
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(
@@ -112,19 +112,19 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       });
                     }
                   },
-                  child: Text('Seleccionar'),
+                  child: const Text('Seleccionar'),
                 ),
                 Text('$months meses(s)'),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Simulate the process of adding a new reminder for the selected service and date.
                 DateTime reminderDate = DateTime.now().add(Duration(days: months * 30));
                 scheduleNotification(selectedService, reminderDate);
               },
-              child: Text('Agregar Recordatorio de Pago'),
+              child: const Text('Agregar Recordatorio de Pago'),
             ),
           ],
         ),
