@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mimonedero/login_widget.dart';
+import 'package:mimonedero/models/ingreso.dart';
+import 'package:mimonedero/models/pagos.dart';
 import 'package:mimonedero/models/pantalla_principal.dart';
 import 'package:mimonedero/utils.dart';
 
@@ -26,6 +28,11 @@ class MyApp extends StatelessWidget {
         title: title,
         theme: ThemeData(primarySwatch: Colors.blue),
         home: const MainPage(),
+        routes: {
+          'home': (_) => HomePage(),
+          'ingreso': (_) => IngresoDinero(),
+          'pago': (_) => VentanaPago(),
+        },
       );
 }
 

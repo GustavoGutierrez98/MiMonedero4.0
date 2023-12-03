@@ -19,15 +19,22 @@ class _NavBarState extends State<NavBar> {
       _selectedIndex = index;
     });
     // Handle navigation as before
-    if (index == 0) {
-      Navigator.push(
+    /*if (index == 0) {
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomePage()));
     } else if (index == 1) {
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => IngresoDinero()));
     } else if (index == 2) {
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => VentanaPago()));
+    }*/
+    if (index == 0) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else if (index == 1) {
+      Navigator.pushReplacementNamed(context, 'ingreso');
+    } else if (index == 2) {
+      Navigator.pushReplacementNamed(context, 'pago');
     }
   }
 
@@ -50,8 +57,7 @@ class _NavBarState extends State<NavBar> {
       ],
       unselectedItemColor: Colors.black, // Color de los items no seleccionados
       selectedItemColor: Colors.black, // Color de los items seleccionados
-      backgroundColor:
-          Colors.deepOrange, // Background color del navigation bar
+      backgroundColor: Colors.deepOrange, // Background color del navigation bar
       currentIndex: _selectedIndex, // Set the current selected index
       onTap: _onItemTapped,
     );
