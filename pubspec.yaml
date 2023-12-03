@@ -54,6 +54,8 @@ dependencies:
   line_icons: ^2.0.3
   bordered_text: ^2.0.0
   flutter_local_notifications: ^8.2.0
+  timezone:
+  intl:
 
 
 
