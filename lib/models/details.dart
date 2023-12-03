@@ -10,23 +10,23 @@ class TransactionDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String title = '';
+    //String title = '';
     String amount = '';
     String category = '';
     String date = '';
-    String type='';
+    String type = '';
 
     if (transaction is Balance) {
       final balance = transaction as Balance;
-      title = 'Ingreso';
+      //title = 'Ingreso';
       amount = 'Ingreso: \$${(balance.amount).toStringAsFixed(2)}';
       date = 'Fecha: ${balance.date}';
     } else if (transaction is Payment) {
       final payment = transaction as Payment;
-      title = 'Pago';
+      //title = 'Pago';
       amount = 'Pago: -\$${(payment.amount).toStringAsFixed(2)}';
-      category='Categoria: ${payment.category}';
-      type='Tipo: ${payment.type}';
+      category = 'Categoria: ${payment.category}';
+      type = 'Tipo: ${payment.type}';
       date = 'Fecha: ${payment.date}';
     }
 

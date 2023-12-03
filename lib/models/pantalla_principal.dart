@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
-import 'package:mimonedero/models/ingreso.dart';
-import 'package:mimonedero/models/pagos.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/autoDrawer.dart';
 

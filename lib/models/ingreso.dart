@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mimonedero/database/db.dart';
 import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:mimonedero/widgets/filtro_numerico.dart';
-import 'package:mimonedero/widgets/lineal.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/splash_screen.dart';
 // ignore: unused_import
 import 'balance_view.dart';
+
 double balance = 0.0;
 List<Balance> _balances = [];
 
@@ -28,6 +28,7 @@ class Balance {
     };
   }
 }
+
 class IngresoDinero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,6 @@ class IngresoDinero extends StatelessWidget {
   }
 }
 
-
-
 class MiCartera extends StatefulWidget {
   @override
   _MiCarteraState createState() => _MiCarteraState();
@@ -75,7 +74,7 @@ class _MiCarteraState extends State<MiCartera> {
 
     if (insertedId != null) {
       setState(() {
-        balance += amount;
+        balance = amount;
         _balances.add(newBalance);
       });
     }
@@ -96,8 +95,9 @@ class _MiCarteraState extends State<MiCartera> {
             children: <Widget>[
               const Text(
                 'Ingrese Saldo:',
-                style: TextStyle(fontSize: 24,),
-                
+                style: TextStyle(
+                  fontSize: 24,
+                ),
               ),
               Text(
                 '\$${balance.toStringAsFixed(2)}',
@@ -148,7 +148,6 @@ class _MiCarteraState extends State<MiCartera> {
                 },
                 child: Text('Depositar Dinero'),
               ),
-              
 
               //Aquí sí funciona, lmao. El widtet de alineación no funciona porque está dentro de una columna, no al final del Scaffold
             ],

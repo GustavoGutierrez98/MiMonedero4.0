@@ -10,7 +10,7 @@ class DonutGraphPage extends StatefulWidget {
 }
 
 class _DonutGraphPageState extends State<DonutGraphPage> {
-  bool _isExpanded = true;
+  //bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {

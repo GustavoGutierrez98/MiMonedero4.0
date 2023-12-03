@@ -25,7 +25,7 @@ class _BalanceViewState extends State<BalanceView> {
   List<Balance>? _balances;
   List<Payment>? _payments;
 
- static const String sortByDate = 'Ordenar por Fecha';
+  static const String sortByDate = 'Ordenar por Fecha';
   static const String sortByCategory = 'Ordenar por Categoria';
 
   String _currentSortOption = sortByDate; // Default sort option

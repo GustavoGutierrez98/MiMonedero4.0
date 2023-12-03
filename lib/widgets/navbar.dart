@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mimonedero/models/pagos.dart';
-import 'package:mimonedero/models/pantalla_principal.dart';
-import 'package:mimonedero/models/ingreso.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
