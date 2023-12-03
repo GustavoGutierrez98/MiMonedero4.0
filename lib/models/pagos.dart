@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mimonedero/widgets/autoDrawer.dart';
 import 'package:mimonedero/widgets/navbar.dart';
 import 'package:mimonedero/widgets/pago_widget.dart';
 import 'package:mimonedero/widgets/splash_screen.dart'; // Import the database class
@@ -26,6 +27,7 @@ class Payment {
       'type': type,
     };
   }
+
   int get year => DateTime.parse(date).year;
   int get month => DateTime.parse(date).month;
 }
@@ -38,6 +40,7 @@ class VentanaPago extends StatelessWidget {
         backgroundColor: Colors.deepOrange,
         title: Text('Realizar Pago'),
       ),
+      endDrawer: autoDrawer(),
       bottomNavigationBar: NavBar(),
       backgroundColor: Colors.white,
       body: Container(
@@ -47,24 +50,23 @@ class VentanaPago extends StatelessWidget {
         ),
         child: Center(
           child: PaymentWidget(),
-          
         ),
       ),
       floatingActionButton: ElevatedButton(
-  onPressed: () {
-    // Navegar a la vista del historial de transacciones (BalanceView)
-    Navigator.push(
-  context,
-  MaterialPageRoute(
-     builder: (context) => SplashScreen(),
-  ),
-);
-  },
-  child: Text('Pagos e Ingresos'),
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.deepOrange, 
-  ),
-),
+        onPressed: () {
+          // Navegar a la vista del historial de transacciones (BalanceView)
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SplashScreen(),
+            ),
+          );
+        },
+        child: Text('Pagos e Ingresos'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.deepOrange,
+        ),
+      ),
     );
   }
 }
