@@ -9,19 +9,17 @@ class GraficaLineal extends StatefulWidget {
 }
 
 class _GraficaLinealState extends State<GraficaLineal> {
-  late List<Balance> _balances;
+  late Future<List<Balance>> _balancesFuture;
 
   @override
   void initState() {
     super.initState();
-    _loadBalances();
+    _balancesFuture = _loadBalances();
   }
 
-  Future<void> _loadBalances() async {
+  Future<List<Balance>> _loadBalances() async {
     final balances = await BalanceDatabase.instance.getAllBalances();
-    setState(() {
-      _balances = balances;
-    });
+    return balances;
   }
 
   @override
@@ -31,11 +29,23 @@ class _GraficaLinealState extends State<GraficaLineal> {
         title: Text('Gráfica Lineal'),
         backgroundColor: Colors.deepOrange,
       ),
-      body: _balances != null
-          ? LinealCharts(balances: _balances)
-          : Center(
+      body: FutureBuilder(
+        future: _balancesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
               child: CircularProgressIndicator(),
-            ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error al cargar los balances'),
+            );
+          } else {
+            List<Balance> balances = snapshot.data as List<Balance>;
+            return LinealCharts(balances: balances);
+          }
+        },
+      ),
     );
   }
 }
