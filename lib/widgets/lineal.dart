@@ -4,6 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_flutter/src/text_element.dart' as elements;
 import 'package:charts_flutter/src/text_style.dart' as styles;
 import 'package:mimonedero/models/ingreso.dart';
+import 'package:intl/intl.dart';
 
 class LinealCharts extends StatelessWidget {
   final List<Balance> balances;
@@ -52,52 +53,58 @@ class LinealCharts extends StatelessWidget {
   }
 }
 
-class MySymbolRenderer extends charts.CircleSymbolRenderer{
+class MySymbolRenderer extends charts.CircleSymbolRenderer {
   @override
   void paint(
     charts.ChartCanvas canvas,
-    Rectangle<num> bounds, 
-    {
-    List<int>? dashPattern, 
-    charts.Color? fillColor, 
-    charts.FillPatternType? fillPattern, 
-    charts.Color? strokeColor, 
-    double? strokeWidthPx
-   }) {
-    
+    Rectangle<num> bounds, {
+    List<int>? dashPattern,
+    charts.Color? fillColor,
+    charts.FillPatternType? fillPattern,
+    charts.Color? strokeColor,
+    double? strokeWidthPx,
+  }) {
     super.paint(
-      canvas, 
-      bounds, 
-      dashPattern: dashPattern,  
-      fillColor: fillColor,  
-      fillPattern: fillPattern,  
-      strokeColor: strokeColor, 
-      strokeWidthPx: strokeWidthPx
+      canvas,
+      bounds,
+      dashPattern: dashPattern,
+      fillColor: fillColor,
+      fillPattern: fillPattern,
+      strokeColor: strokeColor,
+      strokeWidthPx: strokeWidthPx,
     );
+
+    // Extracting date and time separately
+    DateTime selectedDate = LinealCharts.pointerDay != null
+        ? DateTime.parse(LinealCharts.pointerDay!)
+        : DateTime.now();
+
+    String formattedDate = DateFormat.yMd().format(selectedDate);
+    String formattedTime = DateFormat.Hm().format(selectedDate);
+
+    // Displaying the separated date and time in the tooltip
+    var myStyle = styles.TextStyle();
+    myStyle.fontSize = 10;
 
     canvas.drawRect(
       Rectangle(
         bounds.left - 25,
         bounds.top - 35,
-        bounds.width +48,
-        bounds.height +18
-
+        bounds.width + 80,
+        bounds.height + 30,
       ),
       fill: charts.ColorUtil.fromDartColor(Colors.deepOrange),
       stroke: charts.ColorUtil.fromDartColor(Colors.black),
-      strokeWidthPx: 1
+      strokeWidthPx: 1,
     );
-
-    var myStyle = styles.TextStyle();
-    myStyle.fontSize = 10;
 
     canvas.drawText(
       elements.TextElement(
-        'Dia ${LinealCharts.pointerDay} \n ${LinealCharts.pointerAmount}',
-        style: myStyle
+        'Fecha: $formattedDate\nHora: $formattedTime\nMonto: ${LinealCharts.pointerAmount}',
+        style: myStyle,
       ),
-      (bounds.left -20).round(),
-      (bounds.top -30).round(),
+      (bounds.left - 20).round(),
+      (bounds.top - 30).round(),
     );
   }
 }

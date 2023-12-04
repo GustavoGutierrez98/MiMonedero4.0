@@ -133,6 +133,60 @@ class _LoginWidgetState extends State<LoginWidget> {
                 onPressed: signIn,
               ),
               const SizedBox(height: 24),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Nuevo usuario:'),
+                        content: const Text(
+                            'Para crear una cuenta, comuníquese al correo de contacto con la información listada: \n- Nombre completo \n- Correo electrónico \n- Número de teléfono al que enviará su contraseña \n\n tucakike@gmail.com'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Cerrar'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('¿No tienes cuenta?'),
+              ),
+              const SizedBox(height: 190),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Acerca de esta aplicación'),
+                          content: const Text(
+                            'Mi Monedero© permite: \n\n- Realizar ingresos monetarios. \n- Realizar pagos en función de categorías.  \n- Visualizar ingresos y gastos en historial descendiente. \n- Generar archivos de texto a partir del historial. \n- Visualizar ingresos y gastos en gráficas. \n- Programar recordatorios de pagos futuros. \n\n\nCréditos Equipo DeliSoft: \n- Hebert Manuel Alvarez Estrada \n- Luis David Cázares Morales \n- Gabriel Hernández Díaz \n- Iram Oswaldo Gómez Sánchez \n- Gustavo Enrique Gutiérrez Mariscal \n- Jesús Agustín Morales Marta \n- Fabiola Rodríguez Salvador \n- Kevin Fared Velazquez Vargas',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cerrar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Text('Acerca de'),
+                ),
+              ),
             ],
           ),
         ),
